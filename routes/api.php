@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,10 +20,13 @@ Route::group([
     'prefix' => 'auth'
 
 ], function () {
-
+    
+    Route::get('index', [VehicleController::class,'index']);
     Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('register', [AuthController::class, 'register']);
+    Route::post('store', [VehicleController::class,'store']);
+    Route::put('update/{vehicle}', [VehicleController::class,'update']);
+    Route::match(['delete', 'put'], 'restart/{newmonth}', [VehicleController::class,'restart']);
+    Route::post('show/{search}', [VehicleController::class,'show']);
 });
-
-Route::apiResource('vehicles', 'VehicleController');
